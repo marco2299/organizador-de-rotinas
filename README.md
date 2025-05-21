@@ -5,7 +5,7 @@
 </head>
 <body>
 
-  <h1>Organizador de Rotinas - UNILAVRAS</h1>
+  <h1>Organizador de Rotinas</h1>
 
   <h2>Descrição</h2>
   <p>
