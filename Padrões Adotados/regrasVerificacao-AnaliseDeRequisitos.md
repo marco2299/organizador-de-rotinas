@@ -1,10 +1,11 @@
-# Regras de Verificação e Análise de Requisitos
+# Padrões Adotados
 
 ## Objetivo do Documento
 
 Este documento define como os requisitos do sistema **Organizador de Rotinas** serão descritos, organizados e analisados, com base em regras simples e nos princípios apresentados no livro _Engenharia de Software_, de Rogério Magela.
 
----
+
+## Regras de Verificação e Análise de Requisitos
 
 ## 1. Nomenclatura dos Requisitos
 
@@ -62,7 +63,51 @@ Os requisitos não podem se contradizer entre si.
 
 Nesse caso, é necessário revisar e escolher uma abordagem clara e consistente.
 
----
+## Regras de Commit
+
+- Usar modo imperativo ("Adiciona feature" não "Adicionando feature" ou "Adicionada feature")
+- Primeira linha deve ter no máximo 72 caracteres
+- Considere descrever com detalhes no corpo do commit
+- Considere usar um emoji no início da mensagem de commit
+
+Emoji | Code | Commit Type
+------------ | ------------- | -------------
+:tada: | `:tada:` | commit inicial
+:art: | `:art:` | quando melhorar a estrutura/formato do código
+:recycle: | `:recycle:` | quando melhorar ou refatorar um código já existente
+:memo: | `:memo:` | quando escrever alguma documentação
+:bug: | `:bug:` | quando corrigir um bug
+:test_tube: | `:test_tube:` | quando adicionar testes
+:sparkles: | `:sparkles:` | nova funcionalidade
+:arrow_up_down: | `:arrow_up_down:` | ao adicionar ou remover dependências.
+:twisted_rightwards_arrows: | `:twisted_rightwards_arrows:` | merge em branchs
+:rewind: | `:rewind:` | ao reverter versões
+:see_no_evil: | `:see_no_evil:` | solução paliativa avançado
+
+## Uso de Branches
+
+- Para cada nova funcionalidade criada deve ser criada uma nova branch que indica o que está sendo implementado
+  **Exemplo:** `development/feature/RNF01/`
+
+
+## Definições de pastas
+
+Pasta | Conteúdo
+------------ | -------------
+BD | Bancos de dados utilizados
+Padrões Adotados | Documentos relacionados aos padrões do projeto
+Requisitos | Documentos relacionados aos requisitos
+sistema | Implementação do projeto
+
+## Práticas de codificação
+
+
+- Identar o código: 4 espaços para cada nível
+- Colocar espaços dos dois lados dos operadores aritméticos
+- Nomear variáveis e funções no modelo camelCase
+- Nomear funçoes utilizando verbos no infinitivo
+- Nomear variáveis utilizando subsantivos
+- Criar variáveis no início do arquivo
 
 ## Licença
 
