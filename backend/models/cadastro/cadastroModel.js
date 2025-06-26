@@ -1,5 +1,5 @@
 // models/cadastroModel.js
-const pool = require("../db");
+const pool = require("../../db");
 
 async function criarUsuario(nome, email, senha) {
   const query = `

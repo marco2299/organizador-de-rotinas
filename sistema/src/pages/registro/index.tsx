@@ -1,7 +1,6 @@
 import Link from "next/link";
-import Aviso from "@/components/Aviso";
-
 import { use, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function Registro() {
   const [email, setEmail] = useState("");
@@ -9,6 +8,36 @@ export default function Registro() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [mostrarAviso, setMostrarAviso] = useState(false);
+
+  const router = useRouter();
+
+  const handleCadastro = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/cadastro", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nome: firstName + " " + lastName,
+          email: email,
+          senha: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Usuário cadastrado com sucesso!");
+        router.push("/login");
+      } else {
+        alert(data.erro || "Erro ao cadastrar.");
+      }
+    } catch (error) {
+      alert("Erro na conexão com o servidor.");
+      console.error(error);
+    }
+  };
 
   return (
     <div className="flex min-h-screen relative w-full min-h-screen bg-[#90DDF0] overflow-hidden">
@@ -246,66 +275,76 @@ export default function Registro() {
                   />
                 </div>
               </div>
-              {/*Botão de cadastrar */}
-              <div
-                style={{
-                  marginLeft: "5%",
-                  marginTop: "8%",
-                  width: "90%",
-                  height: "100%",
-                  padding: 10,
-                  background: "#362FA6",
-                  borderRadius: 8,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: 10,
-                  display: "inline-flex",
-                }}
-              >
-                <div
+            </div>
+          </form>
+
+          {/*Botão de cadastrar */}
+          <div
+            style={{
+              marginLeft: "25%",
+              marginTop: "1%",
+              width: "50%",
+              height: "100%",
+              padding: 10,
+              background: "#362FA6",
+              borderRadius: 8,
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 10,
+              display: "inline-flex",
+            }}
+          >
+            <div>
+              <div>
+                <button
+                  onClick={handleCadastro}
+                  type="submit"
                   style={{
+                    cursor: "pointer",
+                    background: "transparent",
+                    border: "none",
                     color: "#F0EDEE",
                     fontSize: 17,
                     fontFamily: "Inter",
                     fontWeight: "700",
                     wordWrap: "break-word",
-                    paddingBlockEnd: "1%",
                   }}
                 >
-                  Registrar - se
-                </div>
+                  Registrar-se
+                </button>
               </div>
             </div>
+          </div>
+          {/*Entrar*/}
+          <div
+            style={{
+              marginTop: "2%",
+              color: "#787878",
+              fontSize: 14,
+              fontFamily: "Inter",
+              fontWeight: "700",
+              wordWrap: "break-word",
+              justifyContent: "center",
+              alignItems: "center",
+              display: "flex",
+            }}
+          >
+            Já possui uma conta?
             <div
               style={{
-                marginTop: "2%",
-                color: "#787878",
+                marginLeft: "0.5%",
+                color: "#362FA5",
                 fontSize: 14,
                 fontFamily: "Inter",
                 fontWeight: "700",
                 wordWrap: "break-word",
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
               }}
             >
-              Já possui uma conta?
-              <div
-                style={{
-                  marginLeft: "0.5%",
-                  color: "#362FA5",
-                  fontSize: 14,
-                  fontFamily: "Inter",
-                  fontWeight: "700",
-                  wordWrap: "break-word",
-                }}
-              >
-                <Link rel="stylesheet" href={{ pathname: "/login" }}>
-                  Entrar
-                </Link>
-              </div>
-            </div>
-          </form>
+              <Link rel="stylesheet" href={{ pathname: "/login" }}>
+                Entrar
+              </Link>
+            </div>{" "}
+          </div>
         </div>
       </div>
     </div>

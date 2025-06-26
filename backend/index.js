@@ -1,8 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 
-// importe a rota de login (ajustado para ESModules)
+import cadastroRouter from "./routes/cadastro.js";
 import loginRouter from "./routes/login.js";
+import cors from "cors";
 
 dotenv.config();
 
@@ -11,8 +12,11 @@ const port = process.env.PORT || 3001;
 
 app.use(express.json());
 
-// ⬇️ Aqui está o que faltava: conectar a rota de login
+app.use(cors());
+
 app.use("/login", loginRouter);
+
+app.use("/cadastro", cadastroRouter);
 
 app.get("/", (req, res) => {
   res.send("Servidor funcionando!");

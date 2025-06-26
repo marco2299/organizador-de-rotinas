@@ -1,11 +1,44 @@
-import { use, useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const router = useRouter();
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      alert("Por favor, preencha o email e a senha.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3001/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email, senha: password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(`Bem-vindo, ${data.usuario.nome}!`);
+        router.push("/");
+
+        // redirecionar, salvar token, etc
+      } else {
+        alert(data.erro || "Erro ao fazer login.");
+      }
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      alert("Erro ao conectar com o servidor.");
+    }
+  };
 
   return (
     <div className="flex min-h-screen relative w-full min-h-screen bg-[#90DDF0] overflow-hidden">
@@ -179,7 +212,7 @@ export default function Login() {
                   />
                 </div>
               </div>
-              {/*Botão de cadastrar */}
+              {/*Botão de entrar */}
               <div
                 style={{
                   marginLeft: "5%",
@@ -195,18 +228,21 @@ export default function Login() {
                   display: "inline-flex",
                 }}
               >
-                <div
+                <button
+                  type="button"
+                  onClick={handleLogin}
                   style={{
+                    background: "none",
+                    border: "none",
                     color: "#F0EDEE",
                     fontSize: 17,
                     fontFamily: "Inter",
                     fontWeight: "700",
-                    wordWrap: "break-word",
-                    paddingBlockEnd: "1%",
+                    cursor: "pointer",
                   }}
                 >
                   Entrar
-                </div>
+                </button>
               </div>
             </div>
             <div

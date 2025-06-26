@@ -21,6 +21,18 @@ class MyDocument extends Document {
         <Head />
         <body>
           <Main />
+          <div
+            style={{
+              color: "#0A090C",
+              fontSize: 23,
+              fontFamily: "Inter",
+              fontWeight: "700",
+              textAlign: "center",
+              padding: 15,
+            }}
+          >
+            Olá, Mundo!
+          </div>
           <NextScript />
         </body>
       </Html>

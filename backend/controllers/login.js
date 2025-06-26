@@ -13,9 +13,11 @@ async function login(req, res) {
     return res.status(404).json({ erro: "Usuário não encontrado" });
   }
 
-  const senhaCorreta = await bcrypt.compare(senha, usuario.senhahash); // use 'senhahash' se for o nome da coluna
+  const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
   if (!senhaCorreta) {
-    return res.status(401).json({ erro: "Senha incorreta" });
+    return res.status(401).json({
+      erro: "Senha incorreta",
+    });
   }
 
   res.json({
