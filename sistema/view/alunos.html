@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alunos - Organizador de Rotinas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Organizador de Rotinas</h1>
+        <div class="form-container">
+            <h2 class="subtitle">Lista de Alunos</h2>
+            <table id="tabelaAlunos" style="width:100%; margin-top:20px; border-collapse:collapse;">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Alunos serão inseridos aqui via JS -->
+                </tbody>
+            </table>
+            <div id="formAtividadeContainer" style="display:none; margin-top:30px;">
+                <h3 id="formAtividadeTitulo">Cadastrar Atividade para o Aluno</h3>
+                <form id="formAtividade">
+                    <input type="hidden" id="alunoIdAtividade" name="alunoId">
+                    <div class="form-group">
+                        <label for="nomeAtividade">Nome da Atividade:</label>
+                        <input type="text" id="nomeAtividade" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="descricaoAtividade">Descrição:</label>
+                        <input type="text" id="descricaoAtividade" name="descricao" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="duracaoAtividade">Duração (minutos):</label>
+                        <input type="number" id="duracaoAtividade" name="duracao" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pesoAtividade">Peso:</label>
+                        <select id="pesoAtividade" name="peso" required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-registrar">Cadastrar Atividade</button>
+                    <button type="button" id="cancelarAtividade" class="btn-registrar" style="background:#ccc; color:#333; margin-left:10px;">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="alunos.js"></script>
+</body>
+</html> 
