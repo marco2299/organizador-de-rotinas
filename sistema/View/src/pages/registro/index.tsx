@@ -1,47 +1,47 @@
 import Link from "next/link";
-import { useState } from "react";
+import { use, useState } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
-export default function Login() {
+export default function Registro() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [mostrarAviso, setMostrarAviso] = useState(false);
+
   const router = useRouter();
 
-  const handleLogin = async () => {
-    if (!email || !password) {
-      alert("Por favor, preencha o email e a senha.");
-      return;
-    }
-
+  const handleCadastro = async () => {
     try {
-      const response = await fetch("http://localhost:3001/login", {
+      const response = await fetch("http://localhost:3001/cadastro", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: email, senha: password }),
+        body: JSON.stringify({
+          nome: firstName + " " + lastName,
+          email: email,
+          senha: password,
+        }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        alert(`Bem-vindo, ${data.usuario.nome}!`);
-        router.push("/");
-
-        // redirecionar, salvar token, etc
+        alert("Usuário cadastrado com sucesso!");
+        router.push("/login");
       } else {
-        alert(data.erro || "Erro ao fazer login.");
+        alert(data.erro || "Erro ao cadastrar.");
       }
     } catch (error) {
-      console.error("Erro na requisição:", error);
-      alert("Erro ao conectar com o servidor.");
+      alert("Erro na conexão com o servidor.");
+      console.error(error);
     }
   };
 
   return (
-    <div className="flex min-h-screen relative w-full min-h-screen bg-[#90DDF0] overflow-hidden">
+    <div className="flex min-h-screen relative w-full bg-[#90DDF0] overflow-hidden">
       {/* Lado esquerdo com degradê */}
 
       {/* Bolha azul clara */}
@@ -85,8 +85,11 @@ export default function Login() {
         }}
       />
       <div className="h-screen flex items-center justify-center relative">
-        <img
+        <Image
           src="/mulher-calendario.png"
+          alt="Mulher com calendário"
+          width={300}
+          height={300}
           className="w-2/3 max-w-sm object-contain"
         />
       </div>
@@ -137,7 +140,7 @@ export default function Login() {
                     wordWrap: "break-word",
                   }}
                 >
-                  Entre para começar a melhorar a sua rotina
+                  Registre-se para começar a melhorar a sua rotina
                 </div>
               </div>
 
@@ -149,7 +152,71 @@ export default function Login() {
                   gap: "12px", //espaçamento entre os campos
                   paddingBlockEnd: "2%",
                 }}
-              ></div>
+              >
+                {/* Nome */}
+                <div style={{ flex: 1 }}>
+                  <div
+                    style={{
+                      height: 48,
+                      background: "#F0EDEE",
+                      borderRadius: 8,
+                      outline: "1px #0A090C solid",
+                      padding: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <input
+                      type="text"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      placeholder="Nome"
+                      style={{
+                        width: "100%",
+                        background: "transparent",
+                        border: "none",
+                        outline: "none",
+                        fontSize: 16,
+                        fontFamily: "Inter",
+                        fontWeight: 700,
+                        color: "#787878",
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Sobrenome */}
+                <div style={{ flex: 1 }}>
+                  <div
+                    style={{
+                      height: 48,
+                      background: "#F0EDEE",
+                      borderRadius: 8,
+                      outline: "1px #0A090C solid",
+                      padding: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <input
+                      type="text"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      placeholder="Sobrenome"
+                      style={{
+                        width: "100%",
+                        background: "transparent",
+                        border: "none",
+                        outline: "none",
+                        fontSize: 16,
+                        fontFamily: "Inter",
+                        fontWeight: 700,
+                        color: "#787878",
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
               {/* Email */}
               <div style={{ flex: 1, paddingBlock: 15 }}>
                 <div
@@ -212,69 +279,76 @@ export default function Login() {
                   />
                 </div>
               </div>
-              {/*Botão de entrar */}
-              <div
-                style={{
-                  marginLeft: "5%",
-                  marginTop: "8%",
-                  width: "90%",
-                  height: "100%",
-                  padding: 10,
-                  background: "#362FA6",
-                  borderRadius: 8,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: 10,
-                  display: "inline-flex",
-                }}
-              >
+            </div>
+          </form>
+
+          {/*Botão de cadastrar */}
+          <div
+            style={{
+              marginLeft: "25%",
+              marginTop: "1%",
+              width: "50%",
+              height: "100%",
+              padding: 10,
+              background: "#362FA6",
+              borderRadius: 8,
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 10,
+              display: "inline-flex",
+            }}
+          >
+            <div>
+              <div>
                 <button
-                  type="button"
-                  onClick={handleLogin}
+                  onClick={handleCadastro}
+                  type="submit"
                   style={{
-                    background: "none",
+                    cursor: "pointer",
+                    background: "transparent",
                     border: "none",
                     color: "#F0EDEE",
                     fontSize: 17,
                     fontFamily: "Inter",
                     fontWeight: "700",
-                    cursor: "pointer",
+                    wordWrap: "break-word",
                   }}
                 >
-                  Entrar
+                  Registrar-se
                 </button>
               </div>
             </div>
+          </div>
+          {/*Entrar*/}
+          <div
+            style={{
+              marginTop: "2%",
+              color: "#787878",
+              fontSize: 14,
+              fontFamily: "Inter",
+              fontWeight: "700",
+              wordWrap: "break-word",
+              justifyContent: "center",
+              alignItems: "center",
+              display: "flex",
+            }}
+          >
+            Já possui uma conta?
             <div
               style={{
-                marginTop: "2%",
-                color: "#787878",
+                marginLeft: "0.5%",
+                color: "#362FA5",
                 fontSize: 14,
                 fontFamily: "Inter",
                 fontWeight: "700",
                 wordWrap: "break-word",
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
               }}
             >
-              Não possui uma conta?
-              <div
-                style={{
-                  marginLeft: "0.5%",
-                  color: "#362FA5",
-                  fontSize: 14,
-                  fontFamily: "Inter",
-                  fontWeight: "700",
-                  wordWrap: "break-word",
-                }}
-              >
-                <Link rel="stylesheet" href={{ pathname: "/registro" }}>
-                  Registre-se
-                </Link>
-              </div>
-            </div>
-          </form>
+              <Link rel="stylesheet" href={{ pathname: "/login" }}>
+                Entrar
+              </Link>
+            </div>{" "}
+          </div>
         </div>
       </div>
     </div>
