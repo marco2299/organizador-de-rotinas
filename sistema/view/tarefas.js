@@ -18,37 +18,54 @@ document.addEventListener('DOMContentLoaded', function() {
     let modoEdicao = false;
 
     async function carregarTarefas() {
+        console.log('Carregando tarefas para o aluno:', alunoId);
         tabela.innerHTML = '<tr><td colspan="5">Carregando...</td></tr>';
-        // Buscar todas as atividades do aluno
-        const atividades = await fetch(`/api/atividades/aluno/${alunoId}`)
-            .then(res => res.json())
-            .then(arr => Array.isArray(arr) ? arr : []);
-        // Buscar todas as associações de rotinaatividade do aluno
-        const rotinaAtividades = await fetch(`/api/rotinaatividades/aluno/${alunoId}`)
-            .then(res => res.json())
-            .then(arr => Array.isArray(arr) ? arr : []);
-        // IDs das atividades já associadas a alguma rotina
-        const idsAssociadas = new Set(rotinaAtividades.map(ra => ra.atividadeId));
-        // Filtrar apenas as atividades não associadas
-        const atividadesNaoAssociadas = atividades.filter(atv => !idsAssociadas.has(atv.id));
-        if (atividadesNaoAssociadas.length === 0) {
-            tabela.innerHTML = '<tr><td colspan="5">Nenhuma atividade registrada.</td></tr>';
-        } else {
-            tabela.innerHTML = '';
-            atividadesNaoAssociadas.forEach(atividade => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${atividade.nome}</td>
-                    <td>${atividade.descricao}</td>
-                    <td>${atividade.duracao}</td>
-                    <td>${atividade.peso}</td>
-                    <td>
-                        <button class="btn-registrar btn-mini btn-editar" data-id="${atividade.id}">Editar</button>
-                        <button class="btn-registrar btn-mini btn-remover" data-id="${atividade.id}">Remover</button>
-                    </td>
-                `;
-                tabela.appendChild(tr);
-            });
+        
+        try {
+            // Buscar todas as atividades do aluno
+            const atividades = await fetch(`/api/atividades/aluno/${alunoId}`)
+                .then(res => res.json())
+                .then(arr => Array.isArray(arr) ? arr : []);
+            
+            console.log('Atividades carregadas:', atividades.length);
+            
+            // Buscar todas as associações de rotinaatividade do aluno
+            const rotinaAtividades = await fetch(`/api/rotinaatividades/aluno/${alunoId}`)
+                .then(res => res.json())
+                .then(arr => Array.isArray(arr) ? arr : []);
+            
+            console.log('RotinaAtividades carregadas:', rotinaAtividades.length);
+            
+            // IDs das atividades já associadas a alguma rotina
+            const idsAssociadas = new Set(rotinaAtividades.map(ra => ra.atividadeId));
+            
+            // Filtrar apenas as atividades não associadas
+            const atividadesNaoAssociadas = atividades.filter(atv => !idsAssociadas.has(atv.id));
+            
+            console.log('Atividades não associadas:', atividadesNaoAssociadas.length);
+            
+            if (atividadesNaoAssociadas.length === 0) {
+                tabela.innerHTML = '<tr><td colspan="5">Nenhuma atividade registrada.</td></tr>';
+            } else {
+                tabela.innerHTML = '';
+                atividadesNaoAssociadas.forEach(atividade => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${atividade.nome}</td>
+                        <td>${atividade.descricao}</td>
+                        <td>${atividade.duracao}</td>
+                        <td>${atividade.peso}</td>
+                        <td>
+                            <button class="btn-registrar btn-mini btn-editar" data-id="${atividade.id}">Editar</button>
+                            <button class="btn-registrar btn-mini btn-remover" data-id="${atividade.id}">Remover</button>
+                        </td>
+                    `;
+                    tabela.appendChild(tr);
+                });
+            }
+        } catch (error) {
+            console.error('Erro ao carregar tarefas:', error);
+            tabela.innerHTML = '<tr><td colspan="5">Erro ao carregar tarefas.</td></tr>';
         }
     }
 
@@ -265,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const rotinaDias = await fetch(`/api/rotinadias/rotina/${rotinaId}`)
                 .then(res => res.json())
                 .then(arr => Array.isArray(arr) ? arr : []);
-            // Mapa de tempo disponível por dia
+            // Mapa de tempo disponível e horário de início atual por dia
             const tempoDisponivel = {};
             for (const rd of rotinaDias) {
                 const disp = await fetch(`/api/buscar/disponibilidade/${rd.id}`)
@@ -275,7 +292,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     const [h1, m1] = disp.horaInicio.split(':').map(Number);
                     const [h2, m2] = disp.horaFim.split(':').map(Number);
                     let minutos = (h2*60 + m2) - (h1*60 + m1);
-                    tempoDisponivel[rd.id] = { minutos, diaSemana: rd.diaSemana, inicio: disp.horaInicio, fim: disp.horaFim };
+                    tempoDisponivel[rd.id] = {
+                        minutos,
+                        diaSemana: rd.diaSemana,
+                        inicio: disp.horaInicio,
+                        fim: disp.horaFim,
+                        proximoInicio: h1*60 + m1 // minutos desde 00:00
+                    };
                 }
             }
             // 3. Ordenar atividades por peso (desc) e duração (desc)
@@ -287,13 +310,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Tenta alocar em qualquer dia com tempo suficiente
                 for (const [rotinaDiaId, info] of Object.entries(tempoDisponivel)) {
                     if (info.minutos >= atv.duracao) {
+                        // Calcular horário de início para esta atividade
+                        const hora = Math.floor(info.proximoInicio / 60).toString().padStart(2, '0');
+                        const min = (info.proximoInicio % 60).toString().padStart(2, '0');
+                        const horaInicio = `${hora}:${min}`;
                         // Associa atividade à rotina
                         await fetch('/api/criar/rotinaatividade', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ rotinaDiaId, atividadeId: atv.id, horaInicio: info.inicio })
+                            body: JSON.stringify({ rotinaDiaId, atividadeId: atv.id, horaInicio })
                         });
                         tempoDisponivel[rotinaDiaId].minutos -= atv.duracao;
+                        tempoDisponivel[rotinaDiaId].proximoInicio += atv.duracao;
                         alocadas.push(atv.id);
                         alocou = true;
                         break;

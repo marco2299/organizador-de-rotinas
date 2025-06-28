@@ -83,5 +83,6 @@ router.put('/atualizar/rotinaatividade/:id', rotinaatividade.update);
 router.delete('/deletar/rotinaatividade/:id', rotinaatividade.delete);
 router.get('/rotinaatividades/rotinadia/:rotinaDiaId', rotinaatividade.findByRotinaDia);
 router.get('/rotinaatividades/atividade/:atividadeId', rotinaatividade.findByAtividade);
+router.get('/rotinaatividades/aluno/:alunoId', rotinaatividade.findByAluno);
 
 module.exports = router;

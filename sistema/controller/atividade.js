@@ -95,20 +95,17 @@ module.exports = {
     async findByAluno(req, res) {
         try {
             const { alunoId } = req.params;
-            const { page = 0 } = req.query;
-            const limite = 10;
 
             const atividades = await Atividade.findAll({
                 where: { alunoId },
                 order: [
                     ['id', 'ASC']
-                ],
-                limit: limite,
-                offset: parseInt(page)
+                ]
             });
             
             return res.json(atividades);
         } catch (error) {
+            console.error('Erro ao buscar atividades do aluno:', error);
             return res.json({msg: "Não foi possível buscar as atividades do aluno: " + error.message});
         }
     },

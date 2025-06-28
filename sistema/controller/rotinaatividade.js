@@ -128,5 +128,38 @@ module.exports = {
         } catch (error) {
             return res.json({msg: "Não foi possível buscar as rotinas da atividade: " + error.message});
         }
+    },
+
+    async findByAluno(req, res) {
+        try {
+            const { alunoId } = req.params;
+            
+            // Primeiro, buscar todas as atividades do aluno
+            const atividades = await model.Atividade.findAll({
+                where: { alunoId },
+                attributes: ['id']
+            });
+            
+            const atividadeIds = atividades.map(atv => atv.id);
+            
+            if (atividadeIds.length === 0) {
+                return res.json([]);
+            }
+            
+            // Buscar todas as rotinaatividades dessas atividades
+            const rotinasAtividades = await RotinaAtividade.findAll({
+                where: { 
+                    atividadeId: atividadeIds 
+                },
+                order: [
+                    ['horaInicio', 'ASC']
+                ]
+            });
+            
+            return res.json(rotinasAtividades);
+        } catch (error) {
+            console.error('Erro ao buscar rotinaatividades do aluno:', error);
+            return res.json({msg: "Não foi possível buscar as rotinaatividades do aluno: " + error.message});
+        }
     }
 } 
