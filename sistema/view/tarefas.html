@@ -1,153 +1,325 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tarefas do Aluno - Organizador de Rotinas</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
     <style>
-        .painel-flex {
-            display: flex;
-            gap: 32px;
-            flex-wrap: wrap;
-        }
-        .painel-flex > div {
-            flex: 1 1 350px;
-            min-width: 320px;
-        }
+      .painel-flex {
+        display: flex;
+        gap: 32px;
+        flex-wrap: wrap;
+      }
+      .painel-flex > div {
+        flex: 1 1 350px;
+        min-width: 320px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1 class="title">Organizador de Rotinas</h1>
-        <div class="form-container painel-flex">
-            <div>
-                <h2 class="subtitle" id="alunoNome">Tarefas Registradas</h2>
-                <button id="btnNovaAtividade" class="btn-registrar" style="margin-bottom:20px;">Adicionar Nova Atividade</button>
-                <table id="tabelaTarefas" style="width:100%; margin-top:10px; border-collapse:collapse;">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Descrição</th>
-                            <th>Duração</th>
-                            <th>Peso</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Tarefas serão inseridas aqui via JS -->
-                    </tbody>
-                </table>
-                <div id="formAtividadeContainer" style="display:none; margin-top:30px;">
-                    <h3 id="formAtividadeTitulo">Cadastrar/Editar Atividade</h3>
-                    <form id="formAtividade">
-                        <input type="hidden" id="atividadeId" name="atividadeId">
-                        <div class="form-group">
-                            <label for="nomeAtividade">Nome da Atividade:</label>
-                            <input type="text" id="nomeAtividade" name="nome" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="descricaoAtividade">Descrição:</label>
-                            <input type="text" id="descricaoAtividade" name="descricao" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="duracaoAtividade">Duração (minutos):</label>
-                            <input type="number" id="duracaoAtividade" name="duracao" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pesoAtividade">Peso:</label>
-                            <select id="pesoAtividade" name="peso" required>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn-registrar">Salvar</button>
-                        <button type="button" id="cancelarAtividade" class="btn-registrar" style="background:#ccc; color:#333; margin-left:10px;">Cancelar</button>
-                    </form>
-                </div>
-            </div>
-            <div>
-                <h2 class="subtitle">Rotinas</h2>
-                <button id="btnNovaRotina" class="btn-registrar" style="margin-bottom:20px;">Adicionar Nova Rotina</button>
-                <table id="tabelaRotinas" style="width:100%; margin-top:10px; border-collapse:collapse;">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Descrição</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Rotinas serão inseridas aqui via JS -->
-                    </tbody>
-                </table>
-                <div id="formRotinaContainer" style="display:none; margin-top:30px;">
-                    <h3 id="formRotinaTitulo">Cadastrar/Editar Rotina</h3>
-                    <form id="formRotina">
-                        <input type="hidden" id="rotinaId" name="rotinaId">
-                        <div class="form-group">
-                            <label for="nomeRotina">Nome da Rotina:</label>
-                            <input type="text" id="nomeRotina" name="nome" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="descricaoRotina">Descrição:</label>
-                            <input type="text" id="descricaoRotina" name="descricao" required>
-                        </div>
-                        <button type="submit" class="btn-registrar">Salvar</button>
-                        <button type="button" id="cancelarRotina" class="btn-registrar" style="background:#ccc; color:#333; margin-left:10px;">Cancelar</button>
-                    </form>
-                </div>
-                <div id="formHorarioContainer" style="display:none; margin-top:30px;">
-                    <h3 id="formHorarioTitulo">Ajustar Horário da Rotina</h3>
-                    <form id="formHorario">
-                        <input type="hidden" id="rotinaIdHorario" name="rotinaId">
-                        <div class="form-group">
-                            <label>Horários disponíveis por dia da semana:</label>
-                            <table style="width:100%; margin-top:10px; border-collapse:collapse;">
-                                <thead>
-                                    <tr>
-                                        <th>Dia</th>
-                                        <th>Hora Início</th>
-                                        <th>Hora Fim</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>Segunda</td><td><input type="time" name="horaInicio-segunda"></td><td><input type="time" name="horaFim-segunda"></td></tr>
-                                    <tr><td>Terça</td><td><input type="time" name="horaInicio-terca"></td><td><input type="time" name="horaFim-terca"></td></tr>
-                                    <tr><td>Quarta</td><td><input type="time" name="horaInicio-quarta"></td><td><input type="time" name="horaFim-quarta"></td></tr>
-                                    <tr><td>Quinta</td><td><input type="time" name="horaInicio-quinta"></td><td><input type="time" name="horaFim-quinta"></td></tr>
-                                    <tr><td>Sexta</td><td><input type="time" name="horaInicio-sexta"></td><td><input type="time" name="horaFim-sexta"></td></tr>
-                                    <tr><td>Sábado</td><td><input type="time" name="horaInicio-sabado"></td><td><input type="time" name="horaFim-sabado"></td></tr>
-                                    <tr><td>Domingo</td><td><input type="time" name="horaInicio-domingo"></td><td><input type="time" name="horaFim-domingo"></td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <button type="submit" class="btn-registrar">Salvar Horários</button>
-                        <button type="button" id="cancelarHorario" class="btn-registrar" style="background:#ccc; color:#333; margin-left:10px;">Cancelar</button>
-                    </form>
-                </div>
-            </div>
+      <h1 class="title">Organizador de Rotinas</h1>
+      <div class="form-container painel-flex">
+        <div>
+          <h2 class="subtitle" id="alunoNome">Tarefas Registradas</h2>
+          <button
+            id="btnNovaAtividade"
+            class="btn-registrar"
+            style="margin-bottom: 20px"
+          >
+            Adicionar Nova Atividade
+          </button>
+          <table
+            id="tabelaTarefas"
+            style="width: 100%; margin-top: 10px; border-collapse: collapse"
+          >
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Duração</th>
+                <th>Peso</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Tarefas serão inseridas aqui via JS -->
+            </tbody>
+          </table>
+          <div
+            id="formAtividadeContainer"
+            style="display: none; margin-top: 30px"
+          >
+            <h3 id="formAtividadeTitulo">Cadastrar/Editar Atividade</h3>
+            <form id="formAtividade">
+              <input type="hidden" id="atividadeId" name="atividadeId" />
+              <div class="form-group">
+                <label for="nomeAtividade">Nome da Atividade:</label>
+                <input type="text" id="nomeAtividade" name="nome" required />
+              </div>
+              <div class="form-group">
+                <label for="descricaoAtividade">Descrição:</label>
+                <input
+                  type="text"
+                  id="descricaoAtividade"
+                  name="descricao"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="duracaoAtividade">Duração (minutos):</label>
+                <input
+                  type="number"
+                  id="duracaoAtividade"
+                  name="duracao"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="pesoAtividade">Peso:</label>
+                <select id="pesoAtividade" name="peso" required>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+              <button type="submit" class="btn-registrar">Salvar</button>
+              <button
+                type="button"
+                id="cancelarAtividade"
+                class="btn-registrar"
+                style="background: #ccc; color: #333; margin-left: 10px"
+              >
+                Cancelar
+              </button>
+            </form>
+          </div>
         </div>
+        <div>
+          <h2 class="subtitle">Rotinas</h2>
+          <button
+            id="btnNovaRotina"
+            class="btn-registrar"
+            style="margin-bottom: 20px"
+          >
+            Adicionar Nova Rotina
+          </button>
+          <table
+            id="tabelaRotinas"
+            style="width: 100%; margin-top: 10px; border-collapse: collapse"
+          >
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Rotinas serão inseridas aqui via JS -->
+            </tbody>
+          </table>
+          <div id="formRotinaContainer" style="display: none; margin-top: 30px">
+            <h3 id="formRotinaTitulo">Cadastrar/Editar Rotina</h3>
+            <form id="formRotina">
+              <input type="hidden" id="rotinaId" name="rotinaId" />
+              <div class="form-group">
+                <label for="nomeRotina">Nome da Rotina:</label>
+                <input type="text" id="nomeRotina" name="nome" required />
+              </div>
+              <div class="form-group">
+                <label for="descricaoRotina">Descrição:</label>
+                <input
+                  type="text"
+                  id="descricaoRotina"
+                  name="descricao"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn-registrar">Salvar</button>
+              <button
+                type="button"
+                id="cancelarRotina"
+                class="btn-registrar"
+                style="background: #ccc; color: #333; margin-left: 10px"
+              >
+                Cancelar
+              </button>
+            </form>
+          </div>
+          <div
+            id="formHorarioContainer"
+            style="display: none; margin-top: 30px"
+          >
+            <h3 id="formHorarioTitulo">Ajustar Horário da Rotina</h3>
+            <form id="formHorario">
+              <input type="hidden" id="rotinaIdHorario" name="rotinaId" />
+              <div class="form-group">
+                <label>Horários disponíveis por dia da semana:</label>
+                <table
+                  style="
+                    width: 100%;
+                    margin-top: 10px;
+                    border-collapse: collapse;
+                  "
+                >
+                  <thead>
+                    <tr>
+                      <th>Dia</th>
+                      <th>Hora Início</th>
+                      <th>Hora Fim</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Segunda</td>
+                      <td><input type="time" name="horaInicio-segunda" /></td>
+                      <td><input type="time" name="horaFim-segunda" /></td>
+                    </tr>
+                    <tr>
+                      <td>Terça</td>
+                      <td><input type="time" name="horaInicio-terca" /></td>
+                      <td><input type="time" name="horaFim-terca" /></td>
+                    </tr>
+                    <tr>
+                      <td>Quarta</td>
+                      <td><input type="time" name="horaInicio-quarta" /></td>
+                      <td><input type="time" name="horaFim-quarta" /></td>
+                    </tr>
+                    <tr>
+                      <td>Quinta</td>
+                      <td><input type="time" name="horaInicio-quinta" /></td>
+                      <td><input type="time" name="horaFim-quinta" /></td>
+                    </tr>
+                    <tr>
+                      <td>Sexta</td>
+                      <td><input type="time" name="horaInicio-sexta" /></td>
+                      <td><input type="time" name="horaFim-sexta" /></td>
+                    </tr>
+                    <tr>
+                      <td>Sábado</td>
+                      <td><input type="time" name="horaInicio-sabado" /></td>
+                      <td><input type="time" name="horaFim-sabado" /></td>
+                    </tr>
+                    <tr>
+                      <td>Domingo</td>
+                      <td><input type="time" name="horaInicio-domingo" /></td>
+                      <td><input type="time" name="horaFim-domingo" /></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <button type="submit" class="btn-registrar">
+                Salvar Horários
+              </button>
+              <button
+                type="button"
+                id="cancelarHorario"
+                class="btn-registrar"
+                style="background: #ccc; color: #333; margin-left: 10px"
+              >
+                Cancelar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="tarefas.js"></script>
     <!-- Modal Visualizar Rotina -->
-    <div id="modalVisualizarRotina" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
-        <div style="background:#fff; padding:32px; border-radius:12px; max-width:700px; width:90vw; max-height:90vh; overflow:auto; position:relative;">
-            <button id="fecharModalRotina" style="position:absolute; top:10px; right:10px; font-size:1.2em; background:none; border:none; cursor:pointer;">&times;</button>
-            <h2 id="tituloModalRotina">Rotina</h2>
-            <div id="quadroRotina"></div>
-        </div>
+    <div
+      id="modalVisualizarRotina"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div
+        style="
+          background: #fff;
+          padding: 32px;
+          border-radius: 12px;
+          max-width: 700px;
+          width: 90vw;
+          max-height: 90vh;
+          overflow: auto;
+          position: relative;
+        "
+      >
+        <button
+          id="fecharModalRotina"
+          style="
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2em;
+            background: none;
+            border: none;
+            cursor: pointer;
+          "
+        >
+          &times;
+        </button>
+        <h2 id="tituloModalRotina">Rotina</h2>
+        <div id="quadroRotina"></div>
+      </div>
     </div>
     <!-- Modal Detalhes da Atividade -->
-    <div id="modalDetalheAtividade" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:1100; align-items:center; justify-content:center;">
-        <div style="background:#fff; padding:28px; border-radius:12px; max-width:400px; width:90vw; max-height:90vh; overflow:auto; position:relative;">
-            <button id="fecharModalAtividade" style="position:absolute; top:10px; right:10px; font-size:1.2em; background:none; border:none; cursor:pointer;">&times;</button>
-            <h2 id="tituloModalAtividade">Detalhes da Atividade</h2>
-            <div id="detalheAtividade"></div>
-        </div>
+    <div
+      id="modalDetalheAtividade"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1100;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div
+        style="
+          background: #fff;
+          padding: 28px;
+          border-radius: 12px;
+          max-width: 400px;
+          width: 90vw;
+          max-height: 90vh;
+          overflow: auto;
+          position: relative;
+        "
+      >
+        <button
+          id="fecharModalAtividade"
+          style="
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2em;
+            background: none;
+            border: none;
+            cursor: pointer;
+          "
+        >
+          &times;
+        </button>
+        <h2 id="tituloModalAtividade">Detalhes da Atividade</h2>
+        <div id="detalheAtividade"></div>
+      </div>
     </div>
-</body>
-</html> 
+  </body>
+</html>
