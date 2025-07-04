@@ -1,43 +1,43 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('RotinaDia', {
+    await queryInterface.createTable("RotinaDia", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       diaSemana: {
         allowNull: false,
         type: Sequelize.INTEGER,
         validate: {
           notEmpty: {
-            msg: "O campo diaSemana é obrigatório"
-          }
-        }
+            msg: "O campo diaSemana é obrigatório",
+          },
+        },
       },
       rotinaId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Rotinas',
-          key: 'id'
+          model: "Rotinas",
+          key: "id",
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('RotinaDia');
-  }
+    await queryInterface.dropTable("RotinaDia");
+  },
 };

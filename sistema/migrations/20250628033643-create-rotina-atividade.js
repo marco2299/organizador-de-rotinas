@@ -1,49 +1,49 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('RotinaAtividades', {
+    await queryInterface.createTable("RotinaAtividades", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       horaInicio: {
-        type: Sequelize.TIME
+        type: Sequelize.TIME,
       },
       horaFim: {
-        type: Sequelize.TIME
+        type: Sequelize.TIME,
       },
       rotinaDiaId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'RotinaDias',
-          key: 'id'
+          model: "RotinaDia",
+          key: "id",
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       atividadeId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Atividades',
-          key: 'id'
+          model: "Atividades",
+          key: "id",
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('RotinaAtividades');
-  }
+    await queryInterface.dropTable("RotinaAtividades");
+  },
 };

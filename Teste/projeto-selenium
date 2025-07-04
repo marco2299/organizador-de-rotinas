@@ -1,0 +1,330 @@
+{
+  "id": "64e312ed-0f6f-4957-ac38-b1a78b3e1477",
+  "version": "2.0",
+  "name": "Kronos",
+  "url": "http://localhost:3000/tarefas.html?alunoId=4&nome=Marco%20A",
+  "tests": [{
+    "id": "c8cc4b13-b16f-4f25-b28c-494afe9a60da",
+    "name": "Erro - Criar atividade (Aluno)",
+    "commands": [{
+      "id": "d0d9a9f3-5d6a-4fd8-806a-0531b8c127d4",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/tarefas.html?alunoId=4&nome=Marco%20A",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ca6952d9-f031-4165-a2ca-7372f90c350d",
+      "comment": "",
+      "command": "click",
+      "target": "id=btnNovaAtividade",
+      "targets": [
+        ["id=btnNovaAtividade", "id"],
+        ["css=#btnNovaAtividade", "css:finder"],
+        ["xpath=//button[@id='btnNovaAtividade']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Adicionar Nova Atividade')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "57564d27-ff07-4fbb-8d1e-0e2e50249013",
+      "comment": "",
+      "command": "click",
+      "target": "id=nomeAtividade",
+      "targets": [
+        ["id=nomeAtividade", "id"],
+        ["name=nome", "name"],
+        ["css=#nomeAtividade", "css:finder"],
+        ["xpath=//input[@id='nomeAtividade']", "xpath:attributes"],
+        ["xpath=//form[@id='formAtividade']/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "13943a19-c129-452a-82d3-0b2ecd28e811",
+      "comment": "",
+      "command": "type",
+      "target": "id=nomeAtividade",
+      "targets": [
+        ["id=nomeAtividade", "id"],
+        ["name=nome", "name"],
+        ["css=#nomeAtividade", "css:finder"],
+        ["xpath=//input[@id='nomeAtividade']", "xpath:attributes"],
+        ["xpath=//form[@id='formAtividade']/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "Ir a academia"
+    }, {
+      "id": "e8e1b1b2-6606-4e4b-968b-ebaae379783e",
+      "comment": "",
+      "command": "click",
+      "target": "id=descricaoAtividade",
+      "targets": [
+        ["id=descricaoAtividade", "id"],
+        ["name=descricao", "name"],
+        ["css=#descricaoAtividade", "css:finder"],
+        ["xpath=//input[@id='descricaoAtividade']", "xpath:attributes"],
+        ["xpath=//form[@id='formAtividade']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1c5e0a68-9e42-46d2-ada9-4821c43a3208",
+      "comment": "",
+      "command": "type",
+      "target": "id=descricaoAtividade",
+      "targets": [
+        ["id=descricaoAtividade", "id"],
+        ["name=descricao", "name"],
+        ["css=#descricaoAtividade", "css:finder"],
+        ["xpath=//input[@id='descricaoAtividade']", "xpath:attributes"],
+        ["xpath=//form[@id='formAtividade']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Treine peito hoje"
+    }, {
+      "id": "c38ddf68-8036-4120-b204-9976c0137d01",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-container",
+      "targets": [
+        ["css=.form-container", "css:finder"],
+        ["xpath=//div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4f169411-362b-4ef2-aab2-6dd69c8dbaab",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-registrar:nth-child(6)",
+      "targets": [
+        ["css=.btn-registrar:nth-child(6)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='formAtividade']/button", "xpath:idRelative"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Salvar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "72a0cd49-f6b9-4739-becf-105489a4f50f",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "442bb28b-6fae-4885-a3b7-eedaa72b3b12",
+    "name": "Criar atividade (Aluno)",
+    "commands": [{
+      "id": "f92a4cbd-a241-4b6a-8c17-da8279c5347a",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/tarefas.html?alunoId=4&nome=Marco%20A",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0f8fc014-4b22-4e05-9ba3-cfebc79144b4",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "69ac0adc-55fd-41b0-8f15-998800c610f7",
+      "comment": "",
+      "command": "click",
+      "target": "id=btnNovaAtividade",
+      "targets": [
+        ["id=btnNovaAtividade", "id"],
+        ["css=#btnNovaAtividade", "css:finder"],
+        ["xpath=//button[@id='btnNovaAtividade']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Adicionar Nova Atividade')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3454d5dc-27b8-401d-8d15-92db06e46fa0",
+      "comment": "",
+      "command": "click",
+      "target": "id=nomeAtividade",
+      "targets": [
+        ["id=nomeAtividade", "id"],
+        ["name=nome", "name"],
+        ["css=#nomeAtividade", "css:finder"],
+        ["xpath=//input[@id='nomeAtividade']", "xpath:attributes"],
+        ["xpath=//form[@id='formAtividade']/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "51fd45d1-abeb-4f99-a501-0a8f27f48a1c",
+      "comment": "",
+      "command": "type",
+      "target": "id=nomeAtividade",
+      "targets": [
+        ["id=nomeAtividade", "id"],
+        ["name=nome", "name"],
+        ["css=#nomeAtividade", "css:finder"],
+        ["xpath=//input[@id='nomeAtividade']", "xpath:attributes"],
+        ["xpath=//form[@id='formAtividade']/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "Ser aprovado na disciplina"
+    }, {
+      "id": "8f7a7862-f17c-4762-9289-eaa01557a780",
+      "comment": "",
+      "command": "click",
+      "target": "id=descricaoAtividade",
+      "targets": [
+        ["id=descricaoAtividade", "id"],
+        ["name=descricao", "name"],
+        ["css=#descricaoAtividade", "css:finder"],
+        ["xpath=//input[@id='descricaoAtividade']", "xpath:attributes"],
+        ["xpath=//form[@id='formAtividade']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6edf1d29-c22c-4912-a8a0-03e2bc9af40d",
+      "comment": "",
+      "command": "type",
+      "target": "id=descricaoAtividade",
+      "targets": [
+        ["id=descricaoAtividade", "id"],
+        ["name=descricao", "name"],
+        ["css=#descricaoAtividade", "css:finder"],
+        ["xpath=//input[@id='descricaoAtividade']", "xpath:attributes"],
+        ["xpath=//form[@id='formAtividade']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Conclua o projeto e tente convencer o professor a ser aprovado na disciplina."
+    }, {
+      "id": "0ae011e2-8521-4dd9-8ab4-a4e086f30759",
+      "comment": "",
+      "command": "click",
+      "target": "id=duracaoAtividade",
+      "targets": [
+        ["id=duracaoAtividade", "id"],
+        ["name=duracao", "name"],
+        ["css=#duracaoAtividade", "css:finder"],
+        ["xpath=//input[@id='duracaoAtividade']", "xpath:attributes"],
+        ["xpath=//form[@id='formAtividade']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "03230051-c417-414b-a806-e09b28e0fae5",
+      "comment": "",
+      "command": "type",
+      "target": "id=duracaoAtividade",
+      "targets": [
+        ["id=duracaoAtividade", "id"],
+        ["name=duracao", "name"],
+        ["css=#duracaoAtividade", "css:finder"],
+        ["xpath=//input[@id='duracaoAtividade']", "xpath:attributes"],
+        ["xpath=//form[@id='formAtividade']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "120"
+    }, {
+      "id": "9955c1e0-e096-41bd-871c-6f5ce89705d9",
+      "comment": "",
+      "command": "click",
+      "target": "id=pesoAtividade",
+      "targets": [
+        ["id=pesoAtividade", "id"],
+        ["name=peso", "name"],
+        ["css=#pesoAtividade", "css:finder"],
+        ["xpath=//select[@id='pesoAtividade']", "xpath:attributes"],
+        ["xpath=//form[@id='formAtividade']/div[4]/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "44a5322f-45b9-4e43-ac89-61bc98439d30",
+      "comment": "",
+      "command": "select",
+      "target": "id=pesoAtividade",
+      "targets": [],
+      "value": "label=5"
+    }, {
+      "id": "a81f2c01-a010-42d6-ac5b-acc9598978f9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-registrar:nth-child(6)",
+      "targets": [
+        ["css=.btn-registrar:nth-child(6)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='formAtividade']/button", "xpath:idRelative"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Salvar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "d4e90712-0f2f-43b8-9882-de56ac175693",
+    "name": "Remover atividade (Aluno)",
+    "commands": [{
+      "id": "c1ea924a-6f99-4a25-a3ce-fc14cb10de4a",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/tarefas.html?alunoId=4&nome=Marco%20A",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "046175bd-d2ad-4211-ab73-114aba27eb71",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6ac2481d-1b97-4c6d-a873-60a846d95b70",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "529302a4-d5e1-45e5-94c3-8462d3422440",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-remover",
+      "targets": [
+        ["css=.btn-remover", "css:finder"],
+        ["xpath=//table[@id='tabelaTarefas']/tbody/tr/td[5]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Remover')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2c9c9cc0-9c3f-4246-83ae-81b9ae6293de",
+      "comment": "",
+      "command": "assertConfirmation",
+      "target": "Deseja realmente remover esta atividade?",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4e6c8da2-e217-4c30-a645-fe02e66f7a7c",
+      "comment": "",
+      "command": "webdriverChooseOkOnVisibleConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "bcbdaba9-e4ac-4254-9867-97379d2ed596",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["c8cc4b13-b16f-4f25-b28c-494afe9a60da"]
+  }],
+  "urls": ["http://localhost:3000/", "http://localhost:3000/tarefas.html?alunoId=4&nome=Marco%20A"],
+  "plugins": []
+}
