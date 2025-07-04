@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       console.log("Atividades carregadas:", atividades.length);
 
-      // Buscar todas as associações de rotinaatividade do aluno
+      // Buscar todas as associações de rotinaatividade do aluno para mostrar informações
       const rotinaAtividades = await fetch(
         `/api/rotinaatividades/aluno/${alunoId}`
       )
@@ -44,24 +44,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
       console.log("RotinaAtividades carregadas:", rotinaAtividades.length);
 
-      // IDs das atividades já associadas a alguma rotina
-      const idsAssociadas = new Set(
-        rotinaAtividades.map((ra) => ra.atividadeId)
-      );
+      // Criar mapa de atividades associadas para mostrar informações
+      const atividadesAssociadas = new Map();
+      rotinaAtividades.forEach((ra) => {
+        if (!atividadesAssociadas.has(ra.atividadeId)) {
+          atividadesAssociadas.set(ra.atividadeId, []);
+        }
+        atividadesAssociadas.get(ra.atividadeId).push(ra);
+      });
 
-      // Filtrar apenas as atividades não associadas
-      const atividadesNaoAssociadas = atividades.filter(
-        (atv) => !idsAssociadas.has(atv.id)
-      );
-
-      console.log("Atividades não associadas:", atividadesNaoAssociadas.length);
-
-      if (atividadesNaoAssociadas.length === 0) {
+      if (atividades.length === 0) {
         tabela.innerHTML =
           '<tr><td colspan="5">Nenhuma atividade registrada.</td></tr>';
       } else {
         tabela.innerHTML = "";
-        atividadesNaoAssociadas.forEach((atividade) => {
+        atividades.forEach((atividade) => {
+          const associacoes = atividadesAssociadas.get(atividade.id) || [];
+          const statusAssociacao = associacoes.length > 0 
+            ? `<span style="color: #28a745; font-size: 0.9em;">✓ Associada a ${associacoes.length} rotina(s)</span>`
+            : `<span style="color: #6c757d; font-size: 0.9em;">○ Não associada</span>`;
+
           const tr = document.createElement("tr");
           tr.innerHTML = `
                         <td>${atividade.nome}</td>
@@ -69,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${atividade.duracao}</td>
                         <td>${atividade.peso}</td>
                         <td>
+                            <div style="margin-bottom: 5px;">${statusAssociacao}</div>
                             <button class="btn-registrar btn-mini btn-editar" data-id="${atividade.id}">Editar</button>
                             <button class="btn-registrar btn-mini btn-remover" data-id="${atividade.id}">Remover</button>
                         </td>
@@ -313,7 +316,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     } else if (e.target.classList.contains("btn-gerar-rotina")) {
       const rotinaId = e.target.getAttribute("data-id");
-      // 1. Buscar atividades não associadas a rotina
+      // 1. Buscar todas as atividades do aluno (incluindo já associadas)
       const atividades = await fetch(`/api/atividades/aluno/${alunoId}`)
         .then((res) => res.json())
         .then((arr) => (Array.isArray(arr) ? arr : []));
@@ -343,7 +346,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       // 3. Ordenar atividades por peso (desc) e duração (desc)
       atividades.sort((a, b) => b.peso - a.peso || b.duracao - a.duracao);
-      // 4. Alocar atividades
+      // 4. Alocar atividades (permitindo múltiplas associações)
       const alocadas = [];
       for (const atv of atividades) {
         let alocou = false;
@@ -356,7 +359,7 @@ document.addEventListener("DOMContentLoaded", function () {
               .padStart(2, "0");
             const min = (info.proximoInicio % 60).toString().padStart(2, "0");
             const horaInicio = `${hora}:${min}`;
-            // Associa atividade à rotina
+            // Associa atividade à rotina (pode ser associada a múltiplas rotinas)
             await fetch("/api/criar/rotinaatividade", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -379,7 +382,7 @@ document.addEventListener("DOMContentLoaded", function () {
       alert(
         "Rotina gerada! Atividades alocadas: " +
           alocadas.length +
-          "\nAtividades não alocadas permanecem no quadro."
+          "\nTodas as atividades permanecem na lista e podem ser associadas a múltiplas rotinas."
       );
     } else if (e.target.classList.contains("btn-visualizar-rotina")) {
       const rotinaId = e.target.getAttribute("data-id");
