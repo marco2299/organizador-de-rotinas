@@ -9,14 +9,20 @@ module.exports = {
             const { nome, descricao, duracao, peso, rotinaDiaId, alunoId } = req.body;
             console.log('Dados recebidos:', { nome, descricao, duracao, peso, rotinaDiaId, alunoId });
             
-            const novaAtividade = await Atividade.create({ 
+            const dadosAtividade = { 
                 nome, 
                 descricao, 
                 duracao, 
                 peso, 
-                rotinaDiaId, 
                 alunoId 
-            });
+            };
+            
+            // Só incluir rotinaDiaId se não for nulo
+            if (rotinaDiaId) {
+                dadosAtividade.rotinaDiaId = rotinaDiaId;
+            }
+            
+            const novaAtividade = await Atividade.create(dadosAtividade);
             return res.json({ msg: 'Atividade criada com sucesso', data: novaAtividade });
         } catch (error) {
             console.error('Erro completo:', error);
@@ -28,14 +34,21 @@ module.exports = {
         try {
             const { id } = req.params;
             const { nome, descricao, duracao, peso, rotinaDiaId, alunoId } = req.body;
-            const atividadeAtualizada = await Atividade.update({ 
+            
+            const dadosAtividade = { 
                 nome, 
                 descricao, 
                 duracao, 
                 peso, 
-                rotinaDiaId, 
                 alunoId 
-            }, { where: { id } });
+            };
+            
+            // Só incluir rotinaDiaId se não for nulo
+            if (rotinaDiaId) {
+                dadosAtividade.rotinaDiaId = rotinaDiaId;
+            }
+            
+            const atividadeAtualizada = await Atividade.update(dadosAtividade, { where: { id } });
             return res.json({ msg: 'Atividade atualizada com sucesso' });
         } catch (error) {
             return res.json({msg: "Não foi possível atualizar a atividade: " + error.message});

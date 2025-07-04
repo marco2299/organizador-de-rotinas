@@ -40,7 +40,7 @@ module.exports = {
         },
       },
       rotinaDiaId: {
-        allowNull: false,
+        allowNull: true,
         references: {
           model: "RotinaDia",
           key: "id",
